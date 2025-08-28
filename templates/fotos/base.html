@@ -5,10 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Galeria de Fotos</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'primary-dark': '#1a202c', // Um cinza escuro para o fundo
+              'primary-light': '#f7fafc', // Um cinza bem claro
+              'accent-blue': '#4299e1', // Um azul vibrante para detalhes
+              'accent-green': '#38a169', // Um verde para sucesso
+            }
+          }
+        }
+      }
+    </script>
   </head>
-  <body>
-    <main>
+  <body class="bg-primary-light text-gray-800 font-sans antialiased">
+    <header class="bg-primary-dark text-white shadow-lg p-4">
+      <nav class="container mx-auto flex justify-between items-center">
+        <a href="{% url 'index' %}" class="text-3xl font-bold tracking-tight hover:text-accent-blue transition-colors duration-200">
+          📸 Galeria de Viagens
+        </a>
+        <div class="space-x-4">
+            </div>
+      </nav>
+    </header>
+
+    <main class="min-h-screen py-8">
       {% block content %}{% endblock %}
     </main>
+
+    <footer class="bg-primary-dark text-gray-400 p-6 text-center text-sm shadow-inner mt-10">
+      <p>&copy; 2025 Galeria de Viagens. Todos os direitos reservados.</p>
+      <p class="mt-1">Desenvolvido com Django & Tailwind CSS</p>
+    </footer>
   </body>
 </html>
