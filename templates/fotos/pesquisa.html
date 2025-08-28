@@ -4,14 +4,15 @@
 {% block content %}
   <div class="container mx-auto px-4 py-8">
     <h1 class="text-5xl font-extrabold text-center text-gray-900 mb-8 leading-tight">
-      Minha Galeria de fotos🌎
+      Resultados da Pesquisa 🔍
     </h1>
 
-    <form action="{% url 'pesquisar' %}" method="get" class="mb-12 flex justify-center">
-      <input type="text" name="buscar" placeholder="Pesquisar por nome, legenda ou categoria..." class="w-full max-w-xl px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200" />
-      <button type="submit" class="ml-2 px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors duration-200">Buscar</button>
-    </form>
-    
+    {% if termo_de_busca %}
+      <p class="text-xl text-center text-gray-600 mb-8">
+        Exibindo resultados para: <span class="font-semibold text-blue-600">"{{ termo_de_busca }}"</span>
+      </p>
+    {% endif %}
+
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
       {% for card in cards %}
         <div class="bg-white rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 ease-in-out overflow-hidden transform group">
@@ -21,7 +22,9 @@
               alt="{{ card.nome }}" 
               class="w-full h-64 object-cover object-center transform group-hover:scale-110 transition-transform duration-300 ease-in-out"
             />
-           
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                <span class="text-white text-lg font-semibold">{{ card.nome }}</span>
+            </div>
           </a>
           <div class="p-5">
             <h2 class="text-xl font-bold text-gray-900 mb-2">{{ card.nome }}</h2>
@@ -34,12 +37,7 @@
         </div>
       {% empty %}
         <div class="col-span-full bg-white rounded-lg shadow-md p-10 text-center text-gray-600 text-xl">
-          <p class="mb-4">Nenhuma foto encontrada. 😔</p>
-          {% if request.GET.buscar %}
-            <p>Tente outra palavra-chave ou <a href="{% url 'index' %}" class="text-blue-600 hover:underline font-semibold">veja todas as fotos</a>.</p>
-          {% else %}
-            <p>Adicione algumas fotos pelo <a href="{% url 'admin:index' %}" class="text-blue-600 hover:underline font-semibold">painel de administração</a> para começar!</p>
-          {% endif %}
+          <p class="mb-4">Nenhuma foto encontrada para a sua pesquisa. 😔</p>
         </div>
       {% endfor %}
     </div>
